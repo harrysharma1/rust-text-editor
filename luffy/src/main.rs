@@ -17,5 +17,9 @@ fn main() {
             println!("{:?} ({})\r", b, c);
         }
 
+        if c == 'q'{
+            break;
+        }
+
     }
 }
