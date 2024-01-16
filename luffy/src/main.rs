@@ -8,10 +8,14 @@ fn main() {
     let _output = stdout().into_raw_mode().unwrap();
 
     for b in std::io::stdin().bytes() {
-        let c = b.unwrap() as  char;
+        let b: u8 = b.unwrap();
+        let c: char = b as char;
         println!("{}",c);
-        if c == 'q'{
-            break;
+        if c.is_control(){
+            print!("{:?}\r",b);
+        }else{
+            println!("{:?} ({})\r", b, c);
         }
+
     }
 }
