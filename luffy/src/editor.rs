@@ -20,7 +20,7 @@ impl Editor{
                         }
                     }
                     Key::Ctrl('w') => break,
-                    _=> println!("{:?} \r", key)
+                    _=> println!("{key:?} \r")
                 }
     
                 
@@ -33,6 +33,7 @@ impl Editor{
         Self{}
     }
 }
+
 fn error_handle(e: std::io::Error){
     panic!("{}", e);
 }
