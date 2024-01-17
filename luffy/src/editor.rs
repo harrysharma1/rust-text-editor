@@ -17,7 +17,7 @@ impl Editor {
             if let Err(error) = self.process_keypress() {
                 error_handle(error);
             }
-            
+
             if let Err(error) = self.refresh_screen() { 
                 error_handle(error);
             }
@@ -33,7 +33,7 @@ impl Editor {
     }
 
     fn refresh_screen(&self) -> Result<(), std::io::Error> {
-        print!("\x1b[2J");
+        print!("{}", termion::clear::All);
         io::stdout().flush()
     }
 
