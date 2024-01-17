@@ -3,24 +3,35 @@ use termion::event::Key;
 use termion::input::TermRead;
 use termion::raw::IntoRawMode;
 
-pub struct Editor {}
+pub struct Editor {
+    should_exit: bool,
+
+}
 
 impl Editor {
-    pub fn run(&self) {
+    pub fn run( &mut self) {
         let _stdout = stdout().into_raw_mode().unwrap();
 
         loop {
             if let Err(error) = self.process_keypress() {
                 error_handle(error);
             }
+
+            if self.should_exit{
+                break;
+            }
         }
     }
     pub fn default() -> Self {
-        Self {}
+        Self {should_exit: false,}
+
     }
-    fn process_keypress(&self) -> Result<(), std::io::Error> {
+    fn process_keypress(&mut self) -> Result<(), std::io::Error> {
         let pressed_key = read_key()?;
-        if let Key::Ctrl('q') = pressed_key { panic!("Program end") }
+        match pressed_key {
+            Key::Ctrl('w') => self.should_exit = true,
+            _ => (),
+        }
         Ok(())
     }
 }
