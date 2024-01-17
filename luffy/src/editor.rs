@@ -1,4 +1,3 @@
-use std::fmt::Error;
 use std::io::{self, stdout, Write};
 use termion::event::Key;
 use termion::input::TermRead;
@@ -33,7 +32,17 @@ impl Editor {
     }
 
     fn refresh_screen(&self) -> Result<(), std::io::Error> {
-        print!("{}", termion::clear::All);
+        let byebye = 
+        {"
+        First line.
+                    Second line, with leading space.
+        "
+        };
+        print!("{}{}", termion::clear::All,termion::cursor::Goto(1,1));
+
+        if self.should_exit{
+            println!("{}",byebye);
+        }
         io::stdout().flush()
     }
 
