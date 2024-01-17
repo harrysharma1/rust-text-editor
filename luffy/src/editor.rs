@@ -29,6 +29,9 @@ impl Editor{
             }
         }
     }
+    pub fn default() -> Self{
+        Editor{}
+    }
 }
 fn error_handle(e: std::io::Error){
     panic!("{}", e);
