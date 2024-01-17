@@ -30,7 +30,7 @@ impl Editor{
         }
     }
     pub fn default() -> Self{
-        Editor{}
+        Self{}
     }
 }
 fn error_handle(e: std::io::Error){
