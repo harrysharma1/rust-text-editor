@@ -33,19 +33,12 @@ impl Editor {
     }
 
     fn refresh_screen(&self) -> Result<(), std::io::Error> {
-        let mut path = env::current_dir()?;
-        path.push("assets/byebye.jpeg");
-        
-        let image  = image::open(
-            &path
-        ).expect("Image not found");
 
-        let ascii_art = artem::convert(image, &artem::config::ConfigBuilder::new().build());
         let byebye = indoc::indoc! {"ByeBye"};
         print!("{}{}", termion::clear::All,termion::cursor::Goto(1,1));
 
         if self.should_exit{
-            println!("{}",ascii_art);
+            println!("asas");
             println!("{}",byebye);
         }
         io::stdout().flush()
