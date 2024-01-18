@@ -1,5 +1,6 @@
 use std::env;
 use std::io::{self, stdout, Write};
+use image::buffer;
 use termion::event::Key;
 use termion::input::TermRead;
 use termion::raw::IntoRawMode;
@@ -33,12 +34,24 @@ impl Editor {
     }
 
     fn refresh_screen(&self) -> Result<(), std::io::Error> {
+        let mut path = env::current_dir()?;
+        path.push("assets/byebye.jpeg");
 
-        let byebye = indoc::indoc! {"ByeBye"};
+        let mut buffer = String::new();
+        rascii_art::render_to(
+            &path.display().to_string(),
+            &mut buffer,
+            &rascii_art::RenderOptions::new()
+                .width(25)
+                .colored(true)
+                .charset(&[".", ",", "-", "*", "£", "$", "#"]),
+        ).unwrap(); 
+
+        let byebye = indoc::indoc! {"Bye Bye !!!"};
         print!("{}{}", termion::clear::All,termion::cursor::Goto(1,1));
 
         if self.should_exit{
-            println!("asas");
+            println!("{}",buffer);
             println!("{}",byebye);
         }
         io::stdout().flush()
