@@ -53,8 +53,17 @@ impl Editor {
         if self.should_exit{
             println!("{}",buffer);
             println!("{}",byebye);
-        }
+        }else{
+           self.print_tilde();
+           print!("{}", termion::cursor::Goto(1,1)); 
+        }   
         io::stdout().flush()
+    }
+
+    fn print_tilde(&self){
+        for _ in 0..24{
+            println!("~\r");
+        }
     }
 
     fn process_keypress(&mut self) -> Result<(), std::io::Error> {
