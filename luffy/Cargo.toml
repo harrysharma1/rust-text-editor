@@ -8,3 +8,5 @@ edition = "2021"
 [dependencies]
 termion = "1"
 indoc = "2"
+image = "0.24.8"
+artem = "2.0.2"
