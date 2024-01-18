@@ -1,6 +1,5 @@
 use std::env;
 use std::io::{self, stdout, Write};
-use image::buffer;
 use termion::event::Key;
 use termion::input::TermRead;
 use termion::raw::IntoRawMode;
