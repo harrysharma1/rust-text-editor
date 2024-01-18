@@ -3,10 +3,11 @@ use std::io::{self, stdout, Write};
 use termion::event::Key;
 use termion::input::TermRead;
 use termion::raw::IntoRawMode;
+use crate::Terminal;
 
 pub struct Editor {
     should_exit: bool,
-
+    terminal: Terminal,
 }
 
 impl Editor {
@@ -28,7 +29,11 @@ impl Editor {
         }
     }
     pub fn default() -> Self {
-        Self {should_exit: false,}
+        Self {
+            should_exit: false,
+            terminal: Terminal::default().expect("Failed to launch terminal"),
+
+        }
 
     }
 
@@ -60,7 +65,7 @@ impl Editor {
     }
 
     fn print_tilde(&self){
-        for _ in 0..24{
+        for _ in 0.. self.terminal.size().height{
             println!("~\r");
         }
     }
