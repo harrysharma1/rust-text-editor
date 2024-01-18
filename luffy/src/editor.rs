@@ -76,5 +76,6 @@ fn read_key() -> Result<Key, std::io::Error> {
 }
 
 fn error_handle(e: std::io::Error) {
+    println!("{}",termion::clear::All);
     panic!("{}",e);
 }
