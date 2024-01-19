@@ -1,8 +1,5 @@
 use std::env;
-use std::io::{self, stdout, Write};
 use termion::event::Key;
-use termion::input::TermRead;
-use termion::raw::IntoRawMode;
 use crate::Terminal;
 
 
@@ -22,7 +19,7 @@ impl Editor {
     // 1. Process the keypress
     // 2. Refresh terminal screen 
     pub fn run( &mut self) {
-        let _stdout = stdout().into_raw_mode().unwrap();
+        
 
         loop {
             if let Err(error) = self.process_keypress() {
@@ -73,16 +70,17 @@ impl Editor {
 
         let byebye = indoc::indoc! {"Bye Bye !!!"};
         
-        print!("{}{}", termion::clear::All,termion::cursor::Goto(1,1));
+        Terminal::clear_screen();
+        Terminal::cursor_pos(0, 0);
 
         if self.should_exit{
             println!("{}",buffer);
             println!("{}",byebye);
         }else{
            self.print_tilde();
-           print!("{}", termion::cursor::Goto(1,1)); 
+           Terminal::cursor_pos(1, 1);
         }   
-        io::stdout().flush()
+        Terminal::flush()
     }
 
     // Simple loop to print tilde based on terminal height
@@ -95,7 +93,7 @@ impl Editor {
     // Processing keys with escape keys being matched to a function
     // For now only Ctrl+w exits the terminal
     fn process_keypress(&mut self) -> Result<(), std::io::Error> {
-        let pressed_key = read_key()?;
+        let pressed_key = Terminal::read_key()?;
         match pressed_key {
             Key::Ctrl('w') => self.should_exit = true,
             _ => (),
@@ -104,18 +102,10 @@ impl Editor {
     }
 }
 
-// Loops and takes key inputs
-fn read_key() -> Result<Key, std::io::Error> {
-    loop {
-        if let Some(key) = io::stdin().lock().keys().next() {
-            return key;
-        }
-    }
-}
 
 // Error handling using Rust IO error library
 // If error does occur then the Terminal will Clear then the error will print
 fn error_handle(e: std::io::Error) {
-    println!("{}",termion::clear::All);
+    Terminal::clear_screen();
     panic!("{}",e);
 }
