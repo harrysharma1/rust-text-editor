@@ -71,16 +71,16 @@ impl Editor {
         let byebye = indoc::indoc! {"Bye Bye !!!"};
         
         Terminal::cursor_hide();
-        Terminal::clear_screen();
         Terminal::cursor_pos(0, 0);
 
         if self.should_exit{
+            Terminal::clear_screen();
             println!("{}",byebye);
         }else{
            self.print_tilde();
            Terminal::cursor_pos(1, 1);
         }
-        
+
         Terminal::cursor_show();   
         Terminal::flush()
     }
@@ -88,6 +88,7 @@ impl Editor {
     // Simple loop to print tilde based on terminal height
     fn print_tilde(&self){
         for _ in 0.. self.terminal.size().height-1{
+            Terminal::clear_current_line();
             println!("~\r");
         }
     }
