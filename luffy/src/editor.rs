@@ -54,38 +54,40 @@ impl Editor {
     // ASCII art is not formatted properly as of now
     fn refresh_screen(&self) -> Result<(), std::io::Error> {
         
-        let mut path = env::current_dir()?;
-        path.push("assets/byebye.jpeg");
+        // let mut path = env::current_dir()?;
+        // path.push("assets/byebye.jpeg");
 
-        let mut buffer = String::new();
+        // let mut buffer = String::new();
         
-        rascii_art::render_to(
-            &path.display().to_string(),
-            &mut buffer,
-            &rascii_art::RenderOptions::new()
-                .width(25)
-                .colored(true)
-                .charset(&[".", ",", "-", "*", "£", "$", "#"]),
-        ).unwrap(); 
+        // rascii_art::render_to(
+        //     &path.display().to_string(),
+        //     &mut buffer,
+        //     &rascii_art::RenderOptions::new()
+        //         .width(25)
+        //         .colored(true)
+        //         .charset(&[".", ",", "-", "*", "£", "$", "#"]),
+        // ).unwrap(); 
 
         let byebye = indoc::indoc! {"Bye Bye !!!"};
         
+        Terminal::cursor_hide();
         Terminal::clear_screen();
         Terminal::cursor_pos(0, 0);
 
         if self.should_exit{
-            println!("{}",buffer);
             println!("{}",byebye);
         }else{
            self.print_tilde();
            Terminal::cursor_pos(1, 1);
-        }   
+        }
+        
+        Terminal::cursor_show();   
         Terminal::flush()
     }
 
     // Simple loop to print tilde based on terminal height
     fn print_tilde(&self){
-        for _ in 0.. self.terminal.size().height{
+        for _ in 0.. self.terminal.size().height-1{
             println!("~\r");
         }
     }

@@ -1,4 +1,3 @@
-use std::fmt::Error;
 use std::io::{self, stdout, Write};            
 use termion::event::Key;            
 use termion::input::TermRead;            
@@ -51,6 +50,14 @@ impl Terminal {
                 return key;
             }
         }
+    }
+
+    pub fn cursor_show(){
+        print!("{}",termion::cursor::Show);
+    }
+
+    pub fn cursor_hide(){
+        print!("{}",termion::cursor::Hide);
     }
 
 
