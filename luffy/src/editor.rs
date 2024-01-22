@@ -5,13 +5,22 @@ use crate::Terminal;
 const VERSION: &str  = env!("CARGO_PKG_VERSION");
 
 
+
+
+struct Position{
+    x:usize,
+    y:usize,
+}
 // Editor Struct that encompasses where the processing part of the editor
 // - should_exit : Boolean value that breaks loop when true
 // - terminal : Terminal struct that gives the dimensions 
 pub struct Editor {
     should_exit: bool,
     terminal: Terminal,
+    cursor_pos: Position,
 }
+
+
 
 
 // Implement all processing logic of the Editor
@@ -43,7 +52,7 @@ impl Editor {
         Self {
             should_exit: false,
             terminal: Terminal::default().expect("Failed to launch terminal"),
-
+            cursor_pos:Position{x:0,y:0},
         }
 
     }
