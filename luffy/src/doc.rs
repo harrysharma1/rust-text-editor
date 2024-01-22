@@ -13,4 +13,10 @@ impl Document{
             rows 
         }            
     }
+
+    pub fn row(&self, index:usize)-> Option<&Row>{
+        self.rows.get(index)
+    }
+
+    
 }

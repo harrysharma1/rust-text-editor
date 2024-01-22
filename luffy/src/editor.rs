@@ -1,4 +1,5 @@
 use termion::event::Key;
+use crate::Row;
 use crate::Terminal;
 use crate::Document;
 
@@ -91,7 +92,7 @@ impl Editor {
             Terminal::clear_screen();
             println!("{}",byebye);
         }else{
-           self.print_tilde();
+           self.draw_rows();
            Terminal::cursor_pos(&self.cursor_pos);
         }
 
@@ -99,12 +100,22 @@ impl Editor {
         Terminal::flush()
     }
 
+    pub fn draw_row(&self, row: &Row) {
+        let start = 0;
+        let end = self.terminal.size().width as usize;
+        let row = row.render(start, end);
+        println!("{:#?}\r", row)
+    }
+
     // Simple loop to print tilde based on terminal height
-    fn print_tilde(&self){
+    fn draw_rows(&self){
         let height = self.terminal.size().height;
-        for row in 0.. height-1{
+        for terminal_row in 0.. height-1{
             Terminal::clear_current_line();
-            if row == height/3{
+            if let Some(row) = self.doc.row(terminal_row as usize){
+                self.draw_row(row);
+            
+            }else if terminal_row == height/3{
                 self.welcome_message();
             }else{
                 print!("~\r");
@@ -170,6 +181,8 @@ impl Editor {
         println!("{}\r", welcome);  
 
     }
+
+
 }
 
 
