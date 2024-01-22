@@ -116,9 +116,23 @@ impl Editor {
         let pressed_key = Terminal::read_key()?;
         match pressed_key {
             Key::Ctrl('w') => self.should_exit = true,
+            Key::Up | Key::Down | Key::Left | Key::Right => self.move_cursor(pressed_key),
             _ => (),
         }
         Ok(())
+    }
+
+    fn move_cursor(&mut self, key:Key){
+        let Position{mut x, mut y} = self.cursor_pos;
+        match key{
+            Key::Up => y = y.saturating_sub(1),
+            Key::Down => y = y.saturating_add(1),
+            Key::Left => x = x.saturating_sub(1),
+            Key::Right => x = x.saturating_add(1),
+            _=>(),
+        }
+
+        self.cursor_pos = Position{x,y};
     }
 
     fn welcome_message(&self){
