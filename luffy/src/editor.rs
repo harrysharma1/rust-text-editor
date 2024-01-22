@@ -69,22 +69,7 @@ impl Editor {
     // ASCII art is not formatted properly as of now
     fn refresh_screen(&self) -> Result<(), std::io::Error> {
         
-        // let mut path = env::current_dir()?;
-        // path.push("assets/byebye.jpeg");
-
-        // let mut buffer = String::new();
-        
-        // rascii_art::render_to(
-        //     &path.display().to_string(),
-        //     &mut buffer,
-        //     &rascii_art::RenderOptions::new()
-        //         .width(25)
-        //         .colored(true)
-        //         .charset(&[".", ",", "-", "*", "£", "$", "#"]),
-        // ).unwrap(); 
-
         let byebye = indoc::indoc! {"Bye Bye !!!"};
-        
         Terminal::cursor_hide();
         Terminal::cursor_pos(&Position::default());
 
@@ -115,7 +100,7 @@ impl Editor {
             if let Some(row) = self.doc.row(terminal_row as usize){
                 self.draw_row(row);
             
-            }else if terminal_row == height/3{
+            }else if self.doc.is_empty() && terminal_row == height/3{
                 self.welcome_message();
             }else{
                 print!("~\r");
