@@ -93,9 +93,7 @@ impl Editor {
         for row in 0.. height-1{
             Terminal::clear_current_line();
             if row == height/3{
-                let welcome = format!("Luffy's editor -- version {}\r", VERSION);
-                let width = std::cmp::min(self.terminal.size().width as usize, welcome.len());                            
-                println!("{}\r", &welcome[..width])
+                self.welcome_message();
             }else{
                 print!("~\r");
             }
@@ -111,6 +109,18 @@ impl Editor {
             _ => (),
         }
         Ok(())
+    }
+
+    fn welcome_message(&self){
+        let mut welcome = format!("Luffy's editor --v{}--",VERSION);
+        let width = self.terminal.size().width as usize;
+        let len  = welcome.len();
+        let padding = width.saturating_sub(len)/2;
+        let spacing  = " ".repeat(padding.saturating_sub(1));
+        welcome = format!("~{}{}", spacing, welcome);            
+        welcome.truncate(width);            
+        println!("{}\r", welcome);  
+
     }
 }
 
