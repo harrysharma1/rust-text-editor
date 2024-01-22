@@ -7,10 +7,11 @@ const VERSION: &str  = env!("CARGO_PKG_VERSION");
 
 
 
-struct Position{
-    x:usize,
-    y:usize,
+pub struct Position{
+    pub x:usize,
+    pub y:usize,
 }
+
 // Editor Struct that encompasses where the processing part of the editor
 // - should_exit : Boolean value that breaks loop when true
 // - terminal : Terminal struct that gives the dimensions 
@@ -82,14 +83,14 @@ impl Editor {
         let byebye = indoc::indoc! {"Bye Bye !!!"};
         
         Terminal::cursor_hide();
-        Terminal::cursor_pos(0, 0);
+        Terminal::cursor_pos(&Position { x: 0, y: 0 });
 
         if self.should_exit{
             Terminal::clear_screen();
             println!("{}",byebye);
         }else{
            self.print_tilde();
-           Terminal::cursor_pos(1, 1);
+           Terminal::cursor_pos(&self.cursor_pos);
         }
 
         Terminal::cursor_show();   
