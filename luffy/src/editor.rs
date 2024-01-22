@@ -55,7 +55,7 @@ impl Editor {
             should_exit: false,
             terminal: Terminal::default().expect("Failed to launch terminal"),
             cursor_pos:Position::default(),
-            doc: Document::default(),
+            doc: Document::open(),
         }
 
     }
