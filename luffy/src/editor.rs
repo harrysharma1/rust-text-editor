@@ -116,7 +116,14 @@ impl Editor {
         let pressed_key = Terminal::read_key()?;
         match pressed_key {
             Key::Ctrl('w') => self.should_exit = true,
-            Key::Up | Key::Down | Key::Left | Key::Right => self.move_cursor(pressed_key),
+            Key::Up 
+            |Key::Down 
+            |Key::Left 
+            |Key::Right 
+            |Key::PageUp
+            |Key::PageDown
+            |Key::End
+            |Key::Home => self.move_cursor(pressed_key),
             _ => (),
         }
         Ok(())
@@ -140,6 +147,10 @@ impl Editor {
                     x = x.saturating_add(1);
                 }
             }
+            Key::PageUp => y=0,
+            Key::PageDown => y = height,
+            Key::Home => x=0,
+            Key::End => x = width,
             _ => (),
         }
 
