@@ -6,7 +6,7 @@ const VERSION: &str  = env!("CARGO_PKG_VERSION");
 
 
 
-
+#[derive(Default)]
 pub struct Position{
     pub x:usize,
     pub y:usize,
@@ -54,7 +54,7 @@ impl Editor {
         Self {
             should_exit: false,
             terminal: Terminal::default().expect("Failed to launch terminal"),
-            cursor_pos:Position{x:0,y:0},
+            cursor_pos:Position::default(),
             doc: Document::default(),
         }
 
@@ -85,7 +85,7 @@ impl Editor {
         let byebye = indoc::indoc! {"Bye Bye !!!"};
         
         Terminal::cursor_hide();
-        Terminal::cursor_pos(&Position { x: 0, y: 0 });
+        Terminal::cursor_pos(&Position::default());
 
         if self.should_exit{
             Terminal::clear_screen();
